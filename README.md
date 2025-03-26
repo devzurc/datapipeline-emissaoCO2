@@ -68,7 +68,7 @@ O script `start.sh` realiza os seguintes passos automaticamente:
 
 ### ⚪ Silver Layer
 - Processa e limpa os dados:
-  - Remove valores nulos críticos.
+  - Faz a limpeza e padronizacao dos dados.
   - Ajusta tipos de dados.
   - Renomeia colunas para um padrão consistente.
 
