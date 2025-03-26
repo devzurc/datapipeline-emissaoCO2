@@ -26,21 +26,34 @@ def etl_gold(logger: logging.Logger) -> None:
     df_silver = pd.read_parquet(silver_file_path)
     logger.info(f"Arquivo carregado da Silver Zone. Registros: {len(df_silver)}")
     
-    # 1. Total de Kilotons de CO2 por Região
-    co2_by_region = df_silver.groupby("region")["kilotons_of_co2"].sum().reset_index()
-    co2_by_region = co2_by_region.sort_values(by="kilotons_of_co2", ascending=False)
+    # 1. Total de Kilotons de CO2 por Região e Metric Tons Per Capita
+    co2_by_region = df_silver.groupby("region").agg(
+        kilotons_of_co2_sum=('kilotons_of_co2', 'sum'),
+        metric_tons_per_capita_sum=('metric_tons_per_capita', 'sum')
+    ).reset_index()
     
-    # 2. Países com as maiores emissões de CO2
-    top_countries = df_silver.groupby("country")["kilotons_of_co2"].sum().reset_index()
-    top_countries = top_countries.sort_values(by="kilotons_of_co2", ascending=False)
+    # 2. Identificando as regiões com maior potencial de redução de CO2
+    co2_by_region['reduction_potential'] = co2_by_region['metric_tons_per_capita_sum']
+    
+    # Ordenar pela maior potencial de redução
+    co2_by_region = co2_by_region.sort_values(by="reduction_potential", ascending=False)
+    
+    # 3. Países com as maiores emissões de CO2 e Metric Tons Per Capita
+    top_countries = df_silver.groupby("country").agg(
+        kilotons_of_co2_sum=('kilotons_of_co2', 'sum'),
+        metric_tons_per_capita_sum=('metric_tons_per_capita', 'sum')
+    ).reset_index()
+    top_countries = top_countries.sort_values(by="kilotons_of_co2_sum", ascending=False)
     
     # Caminhos para salvar os resultados na Gold Zone
     gold_co2_by_region = os.path.join(settings.GOLD_ZONE, "co2_by_region.parquet")
     gold_top_countries = os.path.join(settings.GOLD_ZONE, "top_countries_co2.parquet")
+    gold_reduction_potential = os.path.join(settings.GOLD_ZONE, "reduction_potential_by_region.parquet")
     
     # Salvar resultados
     co2_by_region.to_parquet(gold_co2_by_region, engine="pyarrow", index=False)
     top_countries.to_parquet(gold_top_countries, engine="pyarrow", index=False)
+    co2_by_region.to_parquet(gold_reduction_potential, engine="pyarrow", index=False)
     
     logger.info("Resultados de BI salvos com sucesso na Gold Zone!")
 

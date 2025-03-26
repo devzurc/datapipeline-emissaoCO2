@@ -22,7 +22,6 @@ Este projeto foi desenvolvido para processar e analisar os dados do conjunto "Em
 - **Python** (ETL e análise de dados)
 - **Pandas** (Manipulação e limpeza de dados)
 - **PyArrow** (Conversão e processamento Parquet)
-- **ConfigParser** (Gerenciamento de configurações)
 - **Logging** (Monitoramento do pipeline)
 
 ## Configuração do Projeto
