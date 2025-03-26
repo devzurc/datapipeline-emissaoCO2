@@ -61,7 +61,7 @@ O script `start.sh` realiza os seguintes passos automaticamente:
 3. **Execução do ETL:** Roda o pipeline ETL, que realiza as transformações e gera os dados processados nas camadas Bronze, Silver e Gold.
 4. **Execução do Jupyter Notebook:** Após a execução do ETL, abre o Jupyter Notebook **`analysis.ipynb`** para que você possa visualizar e interagir com os dashboards atualizados.
 
-## 📊 Explicação das Camadas
+## Explicação das Camadas
 
 ### 🟤 Bronze Layer
 - Converte o CSV em Parquet e salva na camada Bronze sem modificar os dados.
