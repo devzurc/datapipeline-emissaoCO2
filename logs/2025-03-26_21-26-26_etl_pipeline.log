@@ -1,0 +1,6 @@
+2025-03-26 21:26:26,181 - INFO - Configuração de logging concluída.
+2025-03-26 21:26:26,182 - INFO - Diretórios da arquitetura Lakehouse verificadas com sucesso.
+2025-03-26 21:26:26,195 - INFO - Arquivo CSV carregado com sucesso de data-source/Emissão_CO2_por_países.csv. Registros: 5677
+2025-03-26 21:26:29,480 - INFO - Arquivo Parquet salvo na Bronze Zone: data-lakehouse/bronze/Emissão_CO2_por_países.parquet
+2025-03-26 21:26:34,934 - INFO - Arquivo carregado. Registros: 5677
+2025-03-26 21:26:35,008 - INFO - Arquivo salvo na Silver Zone: data-lakehouse/silver/Emissão_CO2_por_países.parquet
